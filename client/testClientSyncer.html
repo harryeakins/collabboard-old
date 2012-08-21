@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Client Syncer Test Suite</title>
+    <link rel="stylesheet" href="nodeunit.css" type="text/css" />
+    <script src="jquery.min.js"></script>
+    <script src="jcanvas.min.js"></script>
+    <script src="nodeunit.js"></script>
+    <script src="nodemock.js"></script>
+    <script src="testClientSyncer.js"></script>
+  </head>
+  <body>
+    <h1 id="nodeunit-header">Client Syncer Test Suite</h1>
+    <script>
+      $(document).ready(function() {
+        if(window.Worker) {
+          nodeunit.run({
+            'Test ClientSyncer': testClientSyncer
+          });
+        } else {
+          console.log("No Web Worker support!");
+        }
+      });
+    </script>
+    <div id="canvas-div">
+      
+    </div>
+  </body>
+</html>

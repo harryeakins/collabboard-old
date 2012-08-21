@@ -1,0 +1,13 @@
+{
+  "name": "collabboard",
+  "version": "0.0.1",
+  "description": "Collaborative Whiteboard",
+  "author": "Harry Eakins <harryeakins@googlemail.com>",
+  "dependencies": { "colorize": "0.1.0",
+  					"socket.io": "0.9.6",
+  					"nodeunit": "0.7.4",
+  					"node-inspector": "0.2.0beta3",
+  					"node.extend": "1.0.0",
+  					"nodemock": "0.2.17" },
+  "engine": "node 0.4.1"
+}

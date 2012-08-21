@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>Drawing Board Test Suite</title>
+    <link rel="stylesheet" href="nodeunit.css" type="text/css" />
+    <script src="jquery.min.js"></script>
+    <script src="jcanvas.min.js"></script>
+    <script src="nodeunit.js"></script>
+    <script src="drawing-board.js"></script>
+    <script src="testDrawingBoard.js"></script>
+  </head>
+  <body>
+    <h1 id="nodeunit-header">Drawing Board Test Suite</h1>
+    <script>
+      $(document).ready(function() {
+        nodeunit.run({
+          'Test Drawing Board': testDrawingBoard
+        });
+      });
+    </script>
+    <div id="canvas-div">
+      
+    </div>
+  </body>
+</html>
