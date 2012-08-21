@@ -1,19 +1,19 @@
-var syncer = require('./syncer')
+var syncer = require('./syncer');
 var nm = require("nodemock");
 var colorize = require('colorize');
 
 function hook_stdout(callback) {
-    var old_write = process.stdout.write
+	var old_write = process.stdout.write;
 
-    process.stdout.write = (function(write) {
-        return function(string, encoding, fd) {
-            callback(string, encoding, fd)
-        }
-    })(process.stdout.write)
+	process.stdout.write = (function(write) {
+		return function(string, encoding, fd) {
+			callback(string, encoding, fd);
+		};
+	}(process.stdout.write));
 
-    return function() {
-        process.stdout.write = old_write
-    }
+	return function() {
+		process.stdout.write = old_write;
+	};
 }
 
 var cconsole = colorize.console;
@@ -47,30 +47,33 @@ testSyncer2Users_callbackCalled: function () {
 	mockuser1.assert();
 	mockuser2.assert();
 }
-}
+};
 
-for (var test_name in tests) {
-	process.stdout.write(colorize.ansify("#green[Running #bold[" + test_name + "]...] "));
-	var debugString = "";
-	var unhook = hook_stdout(function(string, encoding, fd) {
-    	debugString += string;
-	})
+var debugString = "";
+var debugCallback = function(string, encoding, fd) {
+		debugString += string;
+	};
+var test_name = null;
 
-	try {
-		tests[test_name]();
-	} catch(err) {
-		unhook();
-		cconsole.log("#red[Failed!]");
-		cconsole.log("#red[Exception Raised:]");
-		cconsole.log(err.toString());
-		cconsole.log("#red[Log:]");
-		cconsole.log(debugString);
-		continue;
+for (test_name in tests) {
+	if(tests.hasOwnProperty(test_name)) {
+		process.stdout.write(colorize.ansify("#green[Running #bold[" + test_name + "]...] "));
+		debugString = "";
+		var unhook = hook_stdout(debugCallback);
+
+		try {
+			tests[test_name]();
+			unhook();
+			cconsole.log("#green[Successful!]");
+		} catch(err) {
+			unhook();
+			cconsole.log("#red[Failed!]");
+			cconsole.log("#red[Exception Raised:]");
+			cconsole.log(err.toString());
+			cconsole.log("#red[Log:]");
+			cconsole.log(debugString);
+		}
 	}
-
-	unhook();
-
-	cconsole.log("#green[Successful!]");
 }
 
 process.exit();
