@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "Pre-commit hook!"
+./build.sh test
+
+for file in $(git diff-index --name-only --diff-filter=ACM --cached HEAD -- | grep -P '\.((js)|(html)|(json))$'); do
+    if jslint $file 2>&1 | grep 'No error found' ; then
+        echo "jslint passed ${file}"
+    else
+        jslint $file
+        exit 1
+    fi  
+done
+
+exit 0
